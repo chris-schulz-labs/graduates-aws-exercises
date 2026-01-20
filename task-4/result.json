@@ -1,8 +1,0 @@
-{
-  "original_file": "input/test-input.txt",
-  "processed_at": "2026-01-19T15:34:45.108360",
-  "original_content": "Hello from S3 event processing\n",
-  "word_count": 5,
-  "character_count": 31,
-  "uppercase_content": "HELLO FROM S3 EVENT PROCESSING\n"
-}

@@ -46,3 +46,45 @@ Thumbs.db
 *.tmp
 *.bak
 .env.local
+
+# Exercise artifacts
+*.zip
+response.json
+*-function.zip
+*-payload.json
+test-*.json
+create-payload.json
+test-create.json
+test-read.json
+test-update.json
+test-find.json
+test-list.json
+test-delete.json
+test-validate.json
+localstack-data/
+
+# Task-specific test files
+downloaded-file.txt
+no-trigger.txt
+test.data
+validation.txt
+bucket-policy.json
+public-file.txt
+private-file.txt
+private-file-2.txt
+input.txt
+output.txt
+secret.txt
+test-input.txt
+file1.txt
+file2.txt
+file3.txt
+batch*.txt
+final-test.txt
+result.json
+cleanup.sh
+SUMMARY.txt
+execution-history*.json
+
+# Task 6 - SQS processing results (UUID-named JSON files)
+task-6/*-*-*-*-*.json

@@ -1,0 +1,66 @@
+{
+  "Comment": "E-commerce order processing workflow",
+  "StartAt": "ValidateOrder",
+  "States": {
+    "ValidateOrder": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:validate-order-step",
+      "ResultPath": "$.validation",
+      "Next": "CheckValidation",
+      "Catch": [{
+        "ErrorEquals": ["States.ALL"],
+        "Next": "OrderFailed",
+        "ResultPath": "$.error"
+      }]
+    },
+    "CheckValidation": {
+      "Type": "Choice",
+      "Choices": [{
+        "Variable": "$.validation.valid",
+        "BooleanEquals": true,
+        "Next": "ProcessPayment"
+      }],
+      "Default": "OrderFailed"
+    },
+    "ProcessPayment": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:process-payment-step",
+      "ResultPath": "$.payment",
+      "Retry": [{
+        "ErrorEquals": ["States.TaskFailed"],
+        "IntervalSeconds": 2,
+        "MaxAttempts": 3,
+        "BackoffRate": 2.0
+      }],
+      "Catch": [{
+        "ErrorEquals": ["States.ALL"],
+        "Next": "PaymentFailed",
+        "ResultPath": "$.error"
+      }],
+      "Next": "GenerateReceipt"
+    },
+    "GenerateReceipt": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:generate-receipt-step",
+      "ResultPath": "$.receipt",
+      "Next": "UpdateOrderStatus"
+    },
+    "UpdateOrderStatus": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:update-order-status-step",
+      "End": true
+    },
+    "PaymentFailed": {
+      "Type": "Pass",
+      "Result": {
+        "status": "payment_failed"
+      },
+      "Next": "OrderFailed"
+    },
+    "OrderFailed": {
+      "Type": "Fail",
+      "Error": "OrderProcessingError",
+      "Cause": "Order processing failed"
+    }
+  }
+}

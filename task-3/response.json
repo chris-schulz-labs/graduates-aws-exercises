@@ -1,1 +1,0 @@
-{"statusCode": 200, "body": "{\n  \"read_input\": \"SUCCESS\",\n  \"write_output\": \"SUCCESS\",\n  \"read_secret\": \"SUCCESS (should be denied!)\"\n}"}

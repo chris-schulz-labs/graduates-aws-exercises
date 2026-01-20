@@ -1,0 +1,98 @@
+{
+  "Comment": "Order processing workflow with validation, inventory check, and payment",
+  "StartAt": "ValidateOrder",
+  "States": {
+    "ValidateOrder": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:validate-order",
+      "ResultPath": "$.validation",
+      "Next": "CheckValidation"
+    },
+    "CheckValidation": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.validation.valid",
+          "BooleanEquals": true,
+          "Next": "CheckInventory"
+        }
+      ],
+      "Default": "ValidationFailed"
+    },
+    "ValidationFailed": {
+      "Type": "Fail",
+      "Error": "ValidationError",
+      "Cause": "Order validation failed"
+    },
+    "CheckInventory": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:check-inventory",
+      "ResultPath": "$.inventory",
+      "Next": "IsInventoryAvailable"
+    },
+    "IsInventoryAvailable": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.inventory.inventoryAvailable",
+          "BooleanEquals": true,
+          "Next": "ProcessPayment"
+        }
+      ],
+      "Default": "OutOfStock"
+    },
+    "ProcessPayment": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:000000000000:function:process-payment",
+      "ResultPath": "$.payment",
+      "Retry": [
+        {
+          "ErrorEquals": ["States.TaskFailed"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Catch": [
+        {
+          "ErrorEquals": ["States.ALL"],
+          "Next": "PaymentFailed",
+          "ResultPath": "$.error"
+        }
+      ],
+      "Next": "OrderCompleted"
+    },
+    "PaymentFailed": {
+      "Type": "Pass",
+      "Result": {
+        "status": "payment_failed",
+        "message": "Payment processing failed after retries"
+      },
+      "ResultPath": "$.result",
+      "Next": "Failure"
+    },
+    "OutOfStock": {
+      "Type": "Pass",
+      "Result": {
+        "status": "out_of_stock",
+        "message": "Item currently unavailable"
+      },
+      "ResultPath": "$.result",
+      "Next": "Failure"
+    },
+    "OrderCompleted": {
+      "Type": "Pass",
+      "Result": {
+        "status": "completed",
+        "message": "Order processed successfully"
+      },
+      "ResultPath": "$.result",
+      "End": true
+    },
+    "Failure": {
+      "Type": "Fail",
+      "Error": "OrderProcessingError",
+      "Cause": "Order could not be completed"
+    }
+  }
+}
