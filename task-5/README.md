@@ -295,11 +295,11 @@ curl -X GET "http://localhost:4566/restapis/$API_ID/dev/_user_request_/items"
 echo "Creating items..."
 ITEM1=$(curl -s -X POST "http://localhost:4566/restapis/$API_ID/dev/_user_request_/items" \
   -H "Content-Type: application/json" \
-  -d '{"name": "Item 1", "description": "First item"}' | grep -o '"id":"[^"]*"' | cut -d'"' -f4)
+  -d '{"name": "Item 1", "description": "First item"}' | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
 
 ITEM2=$(curl -s -X POST "http://localhost:4566/restapis/$API_ID/dev/_user_request_/items" \
   -H "Content-Type: application/json" \
-  -d '{"name": "Item 2", "description": "Second item"}' | grep -o '"id":"[^"]*"' | cut -d'"' -f4)
+  -d '{"name": "Item 2", "description": "Second item"}' | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
 
 echo "Listing all items..."
 curl -s -X GET "http://localhost:4566/restapis/$API_ID/dev/_user_request_/items"
