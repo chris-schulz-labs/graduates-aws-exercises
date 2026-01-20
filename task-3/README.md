@@ -169,9 +169,15 @@ Create a simple function to test the permissions.
 **Python version** (`test_permissions.py`):
 ```python
 import json
+import os
 import boto3
 
-s3 = boto3.client('s3', endpoint_url='http://localhost:4566')
+# Lambda runs in a separate Docker container, so we need to use
+# LOCALSTACK_HOSTNAME (set by LocalStack) instead of localhost
+localstack_host = os.environ.get('LOCALSTACK_HOSTNAME', 'host.docker.internal')
+endpoint_url = f'http://{localstack_host}:4566'
+
+s3 = boto3.client('s3', endpoint_url=endpoint_url)
 
 def handler(event, context):
     bucket = 'processing-bucket'
