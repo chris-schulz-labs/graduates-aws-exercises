@@ -4,19 +4,26 @@
 
 This training program provides hands-on experience with core AWS services for recent graduates who have academic AWS knowledge but no practical experience. The program uses LocalStack to simulate AWS services locally, allowing learners to experiment without incurring cloud costs.
 
-**Duration**: 2-4 hours (practical portion)
+**Duration**: 4-6 hours (practical portion)
+**Target Audience**: Recent graduates with theoretical AWS knowledge
 **Approach**: Language-agnostic with Python examples
 
 ## Learning Path
 
-The training consists of 6 progressive exercises that build upon each other:
+The training consists of 9 progressive exercises that build upon each other:
 
+### Core Services (Tasks 1-6)
 1. **S3 Fundamentals** (15-20 min) - Object storage basics
 2. **Lambda Basics** (20-25 min) - Serverless function fundamentals
 3. **IAM Roles & Least Privilege** (20-25 min) - Security and permissions
 4. **Lambda + S3 Event Processing** (25-30 min) - Event-driven architecture
 5. **API Gateway + Lambda REST API** (25-30 min) - Building HTTP APIs
 6. **SQS + Async Processing** (25-30 min) - Asynchronous messaging patterns
+
+### Advanced Integration (Tasks 7-9)
+7. **Step Functions - Workflow Orchestration** (25-30 min) - State machines and complex workflows
+8. **DynamoDB - NoSQL Database** (25-30 min) - NoSQL data modeling and operations
+9. **End-to-End Application** (30-40 min) - Complete serverless e-commerce system
 
 ## Pre-Workshop Setup
 
@@ -75,30 +82,42 @@ The training consists of 6 progressive exercises that build upon each other:
 
 ### Recommended Structure
 
+**Full Program (4-6 hours)**
+
 1. **Introduction (15 min)**
    - Overview of AWS services covered
    - LocalStack explanation and setup verification
    - Review of foundational concepts
 
-2. **Exercise 1-3 (60-75 min)**
-   - S3 fundamentals
-   - Lambda basics
-   - IAM roles and policies
-   - Break after Exercise 3
+2. **Core Services - Part 1 (60-75 min)**
+   - Task 1: S3 fundamentals
+   - Task 2: Lambda basics
+   - Task 3: IAM roles and policies
+   - Break (10 min)
 
-3. **Exercise 4-5 (50-60 min)**
-   - Lambda + S3 event processing
-   - API Gateway + Lambda REST API
-   - Break after Exercise 5
+3. **Core Services - Part 2 (50-60 min)**
+   - Task 4: Lambda + S3 event processing
+   - Task 5: API Gateway + Lambda REST API
+   - Break (10 min)
 
-4. **Exercise 6 (25-30 min)**
-   - SQS + async processing
-   - Integration of all concepts
+4. **Core Services - Part 3 (25-30 min)**
+   - Task 6: SQS + async processing
+   - Break (10 min)
 
-5. **Wrap-up (15 min)**
+5. **Advanced Integration (80-100 min)**
+   - Task 7: Step Functions workflow orchestration
+   - Task 8: DynamoDB NoSQL database
+   - Task 9: End-to-end application
+   - Break (10 min)
+
+6. **Wrap-up (15 min)**
    - Review of key concepts
    - Real AWS differences
    - Next steps and resources
+
+### Abbreviated Program (2-3 hours)
+
+For shorter sessions, focus on Tasks 1-6 (core services) and demonstrate Task 9 (end-to-end) as a capstone example.
 
 ## LocalStack Compatibility Notes
 
@@ -108,6 +127,8 @@ The training consists of 6 progressive exercises that build upon each other:
 - **IAM**: Optional enforcement in free tier (`ENFORCE_IAM=1`)
 - **API Gateway**: V1 REST API supported (V2 HTTP API requires Pro)
 - **SQS**: Full support including DLQ and message retention
+- **Step Functions**: Full support including JSONata, Variables, and TestState API
+- **DynamoDB**: Full support for tables, indexes, queries, and streams
 - **CloudWatch Logs**: Logs stored and queryable in LocalStack
 
 ### Known Limitations
@@ -120,7 +141,7 @@ The training consists of 6 progressive exercises that build upon each other:
 
 ```yaml
 environment:
-  - SERVICES=s3,lambda,iam,apigateway,sqs,logs,sts
+  - SERVICES=s3,lambda,iam,apigateway,sqs,logs,sts,stepfunctions,dynamodb
   - ENFORCE_IAM=1                    # Enable IAM permission checks
   - LAMBDA_EXECUTOR=docker           # Use Docker for Lambda execution
   - DEBUG=1                          # Verbose logging

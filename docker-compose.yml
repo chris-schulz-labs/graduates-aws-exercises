@@ -8,7 +8,7 @@ services:
       - "4566:4566"
       - "4510-4559:4510-4559"
     environment:
-      - SERVICES=s3,lambda,iam,apigateway,sqs,logs,sts
+      - SERVICES=s3,lambda,iam,apigateway,sqs,logs,sts,stepfunctions,dynamodb
       - DEBUG=1
       - ENFORCE_IAM=1
       - LAMBDA_EXECUTOR=docker

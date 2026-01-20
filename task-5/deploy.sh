@@ -168,7 +168,7 @@ RESPONSE1=$(curl -s -X POST "$BASE_URL/items" \
   -H "Content-Type: application/json" \
   -d '{"name": "Laptop", "description": "Dell XPS 13"}')
 echo "$RESPONSE1" | python3 -m json.tool || echo "Failed"
-ITEM1_ID=$(echo "$RESPONSE1" | grep -o '"id":"[^"]*"' | cut -d'"' -f4)
+ITEM1_ID=$(echo "$RESPONSE1" | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
 echo ""
 
 echo "Test 3: Create second item..."
@@ -176,7 +176,7 @@ RESPONSE2=$(curl -s -X POST "$BASE_URL/items" \
   -H "Content-Type: application/json" \
   -d '{"name": "Mouse", "description": "Logitech MX Master"}')
 echo "$RESPONSE2" | python3 -m json.tool || echo "Failed"
-ITEM2_ID=$(echo "$RESPONSE2" | grep -o '"id":"[^"]*"' | cut -d'"' -f4)
+ITEM2_ID=$(echo "$RESPONSE2" | python3 -c "import sys, json; print(json.load(sys.stdin)['id'])")
 echo ""
 
 echo "Test 4: List all items (should show 2 items)..."
