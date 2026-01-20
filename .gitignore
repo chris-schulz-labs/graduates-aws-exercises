@@ -46,3 +46,19 @@ Thumbs.db
 *.tmp
 *.bak
 .env.local
+
+# Exercise artifacts
+*.zip
+response.json
+*-function.zip
+*-payload.json
+test-*.json
+create-payload.json
+test-create.json
+test-read.json
+test-update.json
+test-find.json
+test-list.json
+test-delete.json
+test-validate.json
+localstack-data/
