@@ -62,3 +62,47 @@ test-list.json
 test-delete.json
 test-validate.json
 localstack-data/
+
+# Task-specific test files
+downloaded-file.txt
+no-trigger.txt
+test.data
+validation.txt
+bucket-policy.json
+public-file.txt
+private-file.txt
+private-file-2.txt
+input.txt
+output.txt
+secret.txt
+test-input.txt
+file1.txt
+file2.txt
+file3.txt
+batch*.txt
+final-test.txt
+result.json
+cleanup.sh
+SUMMARY.txt
+execution-history*.json
+
+# Task 6 - SQS processing results (UUID-named JSON files)
+task-6/*-*-*-*-*.json
+
+# Python exercise files
+lambda_function.py
+test_permissions.py
+s3_processor.py
+api_handler.py
+task_processor.py
+api_enqueue.py
+
+# Policy JSON files
+trust-policy.json
+s3-scoped-policy.json
+s3-event-policy.json
+notification-config.json
+*-role-policy.json
+stepfunctions-trust-policy.json
+dynamodb-policy.json
+order-workflow.json
